@@ -61,7 +61,7 @@ fun LykkeHjulScreen(
             fontFamily = FontFamily.Serif,
             fontSize = 20.sp,
         )
-        // lykkehjul skjold blev designet af mig Fathi s215770 via photoshop :)
+        // lykkehjul skjold blev redigeret af mig Fathi s215770 via photoshop :)
                 Image(painter = painterResource(id = R.drawable.lykkehjulskjold),
             contentDescription = "LykkeHjul",
             modifier = Modifier
