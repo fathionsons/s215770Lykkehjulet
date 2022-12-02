@@ -1,7 +1,7 @@
 package com.fathi.s215770lykkehjulet
 
 data class GameStates (
-    val lives: Int = 5,
+    val userLives: Int = 5,
     val RandomWord: String = "",
     val guessedWord: String = "",
     val category: String = "",

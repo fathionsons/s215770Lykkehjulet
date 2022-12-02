@@ -11,9 +11,7 @@ class GameViewModel: ViewModel() {
     private val categories: List<Category> = Category.getCategories()
     private val _uiState = MutableStateFlow(GameStates())
     val uiState = _uiState.asStateFlow()
-
     private val possibleResults = mutableListOf<Int>()
-
     init {
         initiateGame()
     }
@@ -27,7 +25,7 @@ class GameViewModel: ViewModel() {
             )
         }
         updateGuessedWord(chosenLetter = null)
-        possibleResults.addAll(1..50)
+        possibleResults.addAll(1..1001)
         possibleResults.add(1001)// bankrupt
     }
     private fun updateGuessedWord(chosenLetter: Char? = null) {
@@ -82,8 +80,8 @@ class GameViewModel: ViewModel() {
                     it.equals(chosenLetter, ignoreCase = true)
                 }
                 uiState.value.spinResult?.let {
-                    val lives = it * occurrence
-                    updateLives(lives, "Great '$chosenLetter' present guess the next letter")
+                    val userLives = it * occurrence
+                    updateLives(userLives, "Great '$chosenLetter' present guess the next letter")
                 }
                 updateGuessedWord(chosenLetter)
             } else {
@@ -94,9 +92,9 @@ class GameViewModel: ViewModel() {
     private fun updateLives(lives: Int, message: String) {
         var userLives = 0
         _uiState.update {
-            userLives = it.lives + lives
+            userLives = it.userLives + lives
             it.copy(
-                lives = userLives,
+                userLives = userLives,
                 message = message,
                 chosenLetter = null
             )
@@ -109,13 +107,12 @@ class GameViewModel: ViewModel() {
     private fun spinTheWheel() {
         val result = possibleResults.random()
         updateSpinResult(result)
-        if (result == 1001) { // the event "bankrupt" is being shown
+        if (result == 1001) { // event "bankrupt" is being shown
             gameLost()
         } else {
             enableTyping()
         }
     }
-
     private fun enableTyping() {
         _uiState.update {
             it.copy(
@@ -124,7 +121,6 @@ class GameViewModel: ViewModel() {
             )
         }
     }
-
     private fun updateSpinResult(result: Int) {
         _uiState.update {
             it.copy(
@@ -150,12 +146,4 @@ class GameViewModel: ViewModel() {
             )
         }
     }
-
-
-
-
-
-
-
-
 }
